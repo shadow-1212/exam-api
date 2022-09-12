@@ -31,7 +31,7 @@ model Device {
   state  State @relation(fields:[stateId], references: [state_id])
   user      User @relation(fields:[userId], references: [user_id])
   device_actions DeviceActions[]
-  userId Int?
+  userId Int
   stateId Int
 }
 
@@ -49,5 +49,5 @@ model DeviceActions{
   dact_created_at DateTime @default(now())
   dact_updated_at DateTime @default(now())
   device  Device @relation(fields:[deviceId], references: [dvc_id])
-  deviceId Int?
+  deviceId Int
 }
