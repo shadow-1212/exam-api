@@ -11,38 +11,43 @@ generator client {
 }
 
 model User {
-  id       Int    @id @default(autoincrement())
-  username    String
-  password String
-  email   String
-  posts Post[]
-  commands Command[]
+  user_id       Int    @id @default(autoincrement())
+  user_name    String
+  user_lastname  String
+  user_email   String
+  user_password String
+  user_activated Boolean @default(false)
+  user_created_at DateTime  @default(now())
+  user_updated_at DateTime? @default(now())
+  devices Device[]
 }
 
-model Post {
-  id       Int  @id @default(autoincrement())
-  content String
-  product  Product @relation(fields:[productId], references: [id])
-  user      User @relation(fields:[userId], references: [id])
-  userId Int
-  productId Int
+model Device {
+  dvc_id   Int  @id @default(autoincrement())
+  dvc_name String
+  dvc_description String
+  dvc_created_at DateTime @default(now())
+  dvc_updated_at DateTime @default(now())
+  state  State @relation(fields:[stateId], references: [state_id])
+  user      User @relation(fields:[userId], references: [user_id])
+  device_actions DeviceActions[]
+  userId Int?
+  stateId Int
 }
 
-model Product {
-  id       Int  @id @default(autoincrement())
-  label     String
-  stock    Int @default(0)
-  imageUrl    String
-  description String  
-  price       Int  @default(0)
-  posts Post[]
-  commands Command[]
+model State {
+  state_id       Int  @id @default(autoincrement())
+  state_name     String
+  devices Device[]
 }
 
-model Command{
-  id       Int  @id @default(autoincrement())
-  product  Product @relation(fields:[productId], references: [id])
-  user      User @relation(fields:[userId], references: [id])
-  userId Int
-  productId Int
+model DeviceActions{
+  dact_id       Int  @id @default(autoincrement())
+  dact_name String
+  dact_description String
+  dact_date DateTime
+  dact_created_at DateTime @default(now())
+  dact_updated_at DateTime @default(now())
+  device  Device @relation(fields:[deviceId], references: [dvc_id])
+  deviceId Int?
 }

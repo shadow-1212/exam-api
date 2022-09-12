@@ -1,0 +1,2 @@
+-- AlterTable
+ALTER TABLE "DeviceActions" ADD COLUMN     "dact_updated_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP;
